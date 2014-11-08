@@ -54,6 +54,7 @@ public class DataManagement
 			//JOptionPane.showMessageDialog(null,"There is an error with the system, reservation data is missing. Please check the locations of the data files.");
 			//new NewJFrame().setVisible(true);
 		}
+		try{
 		for(int i=0; i<=registeredCheck.length;i++)
 		{
 			if((registeredCheck[i].equalsIgnoreCase(_name)) && (registeredCheck[i+1].equalsIgnoreCase(_email)))
@@ -65,6 +66,11 @@ public class DataManagement
 			{
 				well = false;
 			}
+		}
+		}
+		catch(Exception e)
+		{
+			
 		}
 		return well;
 	}
