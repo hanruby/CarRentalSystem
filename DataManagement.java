@@ -1,15 +1,16 @@
-import java.text.SimpleDateFormat;
-import java.util.*;
 import java.io.*;
+
+import javax.swing.JOptionPane;
 
 public class DataManagement
 {
+	Command command;
 	boolean well;
 	String [] registeredCheck;
-	public void registerCustomer(String customerName, String customerEmail)
+	public void registerCustomer(Customer c)
 	{
-		String _customerName = customerName;
-		String _customerEmail = customerEmail;
+		String _customerName = c.getName();
+		String _customerEmail = c.getEmail();
 		try
 		{
 			boolean ta = checkRegistered(_customerName,_customerEmail);
@@ -21,7 +22,7 @@ public class DataManagement
 			}
 			else
 			{
-				//Already Registered
+				//alreadyregistered
 			}
 		}
 		catch (IOException e)
@@ -29,6 +30,14 @@ public class DataManagement
 		    //failed 
 		}
 		
+	}
+	public void setCommand(Command command)
+	{
+		this.command = command;
+	}
+	public void runIt()
+	{
+		command.execute();
 	}
 
 	
@@ -76,5 +85,3 @@ public class DataManagement
 	}
 
 }
-	
-	
