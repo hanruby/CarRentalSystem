@@ -1,12 +1,13 @@
 import java.io.*;
 
-import javax.swing.JOptionPane;
-
 public class DataManagement
 {
 	Command command;
 	boolean well;
 	String [] registeredCheck;
+	String [] rentals;
+	String [] details;
+	boolean isNew;
 	public void registerCustomer(Customer c)
 	{
 		String _customerName = c.getName();
@@ -83,5 +84,97 @@ public class DataManagement
 		}
 		return well;
 	}
-
+	public void getCustomerDetails(Customer c)
+	{
+		try
+		{
+			File csv = new File("Rentals.csv");
+			BufferedReader csvRead  = new BufferedReader(new FileReader(csv));
+			String lineRead = csvRead.readLine();
+			while(lineRead != null)
+			{
+				this.details = lineRead.split(",");
+				lineRead = csvRead.readLine();
+			}
+			csvRead.close();
+			for(int i = 0; i<=details.length;i++)
+			{
+				if(details[i].equalsIgnoreCase(c.getName()))
+				{
+					
+				}
+			}
+		}
+		catch(Exception e)
+		{
+			
+		}
+		
+	}
+	
+	public void saveRental(String _owner, String _EML,int days,String _model,double _cost,String _type)
+	{
+		String owner = _owner;
+		String EML = _EML;
+		int lengthOfRental = days;
+		String model = _model;
+		double cost = _cost;
+		String type = _type;
+		boolean check = checkRental(owner,EML,lengthOfRental,model,cost,type);
+		if(check == false)
+		{
+			try
+		    {
+				FileWriter writer = new FileWriter("Rentals.csv",true);
+				writer.append(owner+","+EML+","+lengthOfRental+","+model+","+cost+","+type+",");
+				writer.close();
+		    }
+			catch(Exception e)
+			{
+				//failed
+			}
+		}
+		else
+		{
+			System.out.println("didn't save");
+		}
+	}
+	public boolean checkRental(String _owner, String _EML,int days,String _model,double _cost,String _type)
+	{
+		try
+		{
+			File csv = new File("Rentals.csv");
+			BufferedReader csvRead  = new BufferedReader(new FileReader(csv));
+			String lineRead = csvRead.readLine();
+			while(lineRead != null)
+			{
+				this.rentals = lineRead.split(",");
+				lineRead = csvRead.readLine();
+			}
+			csvRead.close();
+		}
+		catch(Exception e)
+		{
+		}
+		try
+		{
+			for(int i=0; i<=rentals.length;i++)
+			{
+				if ((rentals[i].equalsIgnoreCase(_owner)) && (rentals[i+1].equalsIgnoreCase(_EML)) && (Integer.parseInt(rentals[i+2])==days) && (rentals[i+3].equals(_model)) && (Double.parseDouble(rentals[i+4])==_cost) && (rentals[i+5].equalsIgnoreCase(_type)))
+				{
+					isNew = true;
+					break;
+				}
+				else
+				{
+					isNew= false;
+				}
+			}
+		}
+		catch(Exception e)
+		{
+			isNew = false;
+		}
+		return isNew;
+	}
 }
