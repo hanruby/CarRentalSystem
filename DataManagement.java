@@ -7,6 +7,7 @@ public class DataManagement
 	String [] registeredCheck;
 	String [] rentals;
 	String [] details;
+	String [] detailsToReturn;
 	boolean isNew;
 	public void registerCustomer(Customer c)
 	{
@@ -84,32 +85,46 @@ public class DataManagement
 		}
 		return well;
 	}
-	public void getCustomerDetails(Customer c)
+	
+	public String[] getRentals(Customer c)
 	{
+		detailsToReturn = new String[6];
+		Customer test = c;
 		try
 		{
-			File csv = new File("Rentals.csv");
-			BufferedReader csvRead  = new BufferedReader(new FileReader(csv));
-			String lineRead = csvRead.readLine();
+			File rentFile = new File("Rentals.csv");
+			BufferedReader readRent = new BufferedReader(new FileReader(rentFile));
+			String lineRead = readRent.readLine();
 			while(lineRead != null)
 			{
-				this.details = lineRead.split(",");
-				lineRead = csvRead.readLine();
+				this.rentals = lineRead.split(",");
+				lineRead = readRent.readLine();
 			}
-			csvRead.close();
-			for(int i = 0; i<=details.length;i++)
+			readRent.close();
+		}
+		catch(Exception r)
+		{
+			System.out.print("Failed jRead");
+		}
+		System.out.println(rentals.length);
+		try
+		{
+			for(int i = 0; i<=rentals.length;i++)
 			{
-				if(details[i].equalsIgnoreCase(c.getName()))
+				if((rentals[i].equalsIgnoreCase(test.getName()))&&(rentals[i+1].equalsIgnoreCase(test.getEmail())))
 				{
-					
+					detailsToReturn[0] = rentals[i]; //this line of code fails. Seems to be a problem with referencing detailsToReturn
+					System.out.print("hello");
+					return detailsToReturn;
 				}
 			}
 		}
 		catch(Exception e)
 		{
-			
+			System.out.print("Failed jsave");
 		}
-		
+		return detailsToReturn;
+
 	}
 	
 	public void saveRental(String _owner, String _EML,int days,String _model,double _cost,String _type)
