@@ -1,9 +1,20 @@
 
 public class Car extends Vehicle
 {
-	public Car(double cost,String model)
+	InfoV1 gh = new InfoV1();
+	public Car(String model)
 	{
-		super("car",cost,model);
+		super("car",model);
+	}
+	@Override
+	public String[] info() {
+
+		return this._infoRetrieval();
+	}
+	
+	protected String[] _infoRetrieval()
+	{
+		return gh.carData(this);
 	}
 
 }
