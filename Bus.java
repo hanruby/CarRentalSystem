@@ -1,9 +1,10 @@
 public class Bus extends Vehicle
 {
 	private int maxCapacity;
-	public Bus(double cost,String model,int capacity)
+	InfoV1 ghs = new InfoV1();
+	public Bus(String model,int capacity)
 	{
-		super("bus",cost,model);
+		super("bus",model);
 		maxCapacity = capacity;
 		
 	}
@@ -12,6 +13,15 @@ public class Bus extends Vehicle
 	}
 	public void setMaxCapacity(int maxCapacity) {
 		this.maxCapacity = maxCapacity;
+	}
+	@Override
+	public String[] info() {
+		return this._infoRetrieval();
+		
+	}
+	protected String[] _infoRetrieval() {
+		// TODO Auto-generated method stub
+		return ghs.busData(this);
 	}
 	
 
